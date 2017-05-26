@@ -8,7 +8,7 @@ import Prelude (Unit, map, (#))
 import Router (showPage)
 import Typer (AppEff, store)
 
--- app :: forall e. Eff ( vdom :: VDOM | e ) Unit
+
 app :: forall e. AppEff e Unit
 app = let
       menuItems = [ { label: "Hem",   href: "http://www.ibm.com" }

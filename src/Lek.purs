@@ -22,10 +22,10 @@ lek = div
       , div[cls := "small-4 columns", names]
       ]
     , div[cls := "row"
-      , div[cls := "small-4 columns", reknare]
-      , div[cls := "small-4 columns", tajmer]
-      , div[cls := "small-4 columns", counter]
-      , div[cls := "small-4 columns", fetch]
+      , div[cls := "small-3 columns", reknare]
+      , div[cls := "small-3 columns", tajmer]
+      , div[cls := "small-3 columns", counter]
+      , div[cls := "small-3 columns", fetch]
       ]
     ]
 
@@ -94,8 +94,8 @@ fetch :: forall e. (AppVEff e)
 fetch =
   let queries = get $
         map (\query -> "https://restcountries.eu/rest/v2/name/" <> query)
-        >>> debounceTime 300
-        >>> retry 4
+        >>> debounceTime 700
+        >>> retry 2
       responses = queries.responses
         # map (_.body)
   in div

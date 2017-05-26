@@ -8,8 +8,8 @@ import OutWatch.Dom.EmitterBuilder (mapE)
 import OutWatch.Dom.VDomModifier (VDom)
 import OutWatch.Http (get)
 import OutWatch.Sink (createBoolHandler, createHandler, createStringHandler)
-import Prelude (const, map, negate, (#), (+), (<>), (>>>))
-import RxJS.Observable (combineLatest, debounceTime, interval, mapTo, merge, retry, scan, startWith)
+import Prelude (const, map, negate, (#), ($), (+), (<>), (>>>))
+import RxJS.Observable (combineLatest, debounceTime, interval, merge, retry, scan, startWith)
 import Typer (AppVEff)
 
 
@@ -92,20 +92,13 @@ names =
 
 fetch :: forall e. (AppVEff e)
 fetch =
-  let queries = get (
---     bus = get (mapTo "http://someurl.org")
-        -- map (\query -> "https://httpbin.org/get?query=" <> query)
-        -- map (\query -> "http://yourmoneyisnowmymoney.com/api/zipcodes/?zipcode=" <> query)
-        -- map (\query -> "https://postnummersok.se/sv/api/postcode?zipcode=" <> query)
-        map (\query -> "https://restcountries.eu/rest/v2/name/" <> query) -- ?fullText=true
+  let queries = get $
+        map (\query -> "https://restcountries.eu/rest/v2/name/" <> query)
         >>> debounceTime 300
-        >>> retry 4)
+        >>> retry 4
       responses = queries.responses
         # map (_.body)
   in div
       [ input[inputString ==> queries]
       , span[childShow <== responses]
-      -- button[cls := "button primary", click ==> bus, text "GO Fetch!"]
       ]
-
-

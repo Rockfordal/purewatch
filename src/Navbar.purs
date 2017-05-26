@@ -6,7 +6,7 @@ import OutWatch.Attributes (children, click, cls, href, placeholder, tpe, (:=), 
 import OutWatch.Dom.EmitterBuilder (mapE)
 import OutWatch.Dom.VDomModifier (VDom)
 import OutWatch.Tags (a, button, div, input, li, text, ul)
-import Prelude (const, map, (#), ($), (<>), (==))
+import Prelude (const, map, (#), ($), (==))
 import Typer (Action(..), store)
 
 type MenuItem = { label :: String
@@ -43,4 +43,3 @@ navitem item current =
      , a [href := item.href, mapE click (const (Navigate item.label)) ==> store, text item.label ]
      ] where
     aktiv = item.label == current ? "active" : ""
-    -- aktiv = "" -- item.label == current ? "active" : ""

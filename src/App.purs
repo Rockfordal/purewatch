@@ -26,5 +26,3 @@ app = let
             , child <== navbarView
             ]
   in render "#app" root
-
--- button [ cls := "button success", href := "Lek", mapE click (const (Navigate "Lek")) ==> store ]

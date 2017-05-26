@@ -18,7 +18,7 @@ navbar items current =
   div [ cls := "top-bar"
     , div [cls := "top-bar-left hover-underline-menu", data_ "menu-underline-from-center" := true
         , ul [children <== lists, cls := "menu"
-           , li [ a [href := "", cls := "menu-text", text "Website" ] ]
+           , li [ a [href := "", cls := "menu-text", text "Website" ]]
       ]
     ]
     , div [ cls := "top-bar-right"
@@ -40,6 +40,6 @@ navbar items current =
 navitem :: forall e. MenuItem -> String -> VDom e
 navitem item current =
   li [ cls := aktiv
-     , a [href := item.href, mapE click (const (Navigate item.label)) ==> store, text item.label ]
+     , a [href := item.href, mapE click (const (Navigate item.label)) ==> store, text item.label]
      ] where
     aktiv = item.label == current ? "active" : ""

@@ -11,4 +11,3 @@ main :: Unit
 main = unsafePerformEff $ do
   app
   hot
-

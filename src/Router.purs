@@ -5,8 +5,9 @@ import Myform (myform)
 import OutWatch.Dom.VDomModifier (VDom)
 import OutWatch.Tags (p, text)
 import TodoApp (todoview)
+import Typer (AppVEff)
 
-showPage :: forall e. String -> VDom e
+showPage :: forall e. String -> AppVEff e
 showPage current =
   case current of
     "Hem" -> home

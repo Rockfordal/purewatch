@@ -1,7 +1,13 @@
 module Typer where
 
+import Control.Monad.Eff (Eff)
+import Network.HTTP.Affjax (AJAX)
+import OutWatch.Dom (VDOM)
+import OutWatch.Dom.VDomModifier (VDom)
 import OutWatch.Util.Store (Store, createStore)
 
+type AppEff e = Eff (vdom :: VDOM, ajax :: AJAX | e)
+type AppVEff e = VDom (ajax :: AJAX | e)
 
 data Action
  = Navigate String

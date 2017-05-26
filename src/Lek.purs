@@ -1,16 +1,19 @@
 module Lek where
 
 import ElmCount (counter)
+import Network.HTTP.Affjax (AJAX)
 import OutWatch.Attributes (childShow, click, cls, hidden, href, inputChecked, inputString, style, tpe, (:=), (<==), (==>))
 import OutWatch.Dom (a, button, div, h2, h3, input, span, text, p, label)
 import OutWatch.Dom.EmitterBuilder (mapE)
 import OutWatch.Dom.VDomModifier (VDom)
+import OutWatch.Http (get)
 import OutWatch.Sink (createBoolHandler, createHandler, createStringHandler)
-import Prelude (const, map, negate, (#), (+), (<>))
-import RxJS.Observable (combineLatest, interval, merge, scan, startWith)
--- import RxJS.Observable as Observable
+import Prelude (const, map, negate, (#), (+), (<>), (>>>))
+import RxJS.Observable (combineLatest, debounceTime, interval, mapTo, merge, retry, scan, startWith)
+import Typer (AppVEff)
 
-lek :: forall e. VDom e
+
+lek :: forall e. VDom (ajax :: AJAX | e)
 lek = div
     [ div
       [ cls := "row"
@@ -22,6 +25,7 @@ lek = div
       , div[cls := "small-4 columns", reknare]
       , div[cls := "small-4 columns", tajmer]
       , div[cls := "small-4 columns", counter]
+      , div[cls := "small-4 columns", fetch]
       ]
     ]
 
@@ -41,7 +45,7 @@ toggla =
     div [ cls := "card", style := "width: 260px"
         , div [cls := "section", text "Toggle"]
         , input [tpe := "checkbox", inputChecked ==> toggleEvents]
-        , h2 [text "TJENISPENIS", hidden <== toggleEvents.src]
+        , h2 [text "Im Toggled!", hidden <== toggleEvents.src]
         ] where
         toggleEvents = createBoolHandler[]
 
@@ -84,4 +88,24 @@ names =
       fullNames  = combineLatest
                   (\first last -> first <> " " <> last)
                   firstNames.src lastNames.src
+
+
+fetch :: forall e. (AppVEff e)
+fetch =
+  let queries = get (
+--     bus = get (mapTo "http://someurl.org")
+        -- map (\query -> "https://httpbin.org/get?query=" <> query)
+        -- map (\query -> "http://yourmoneyisnowmymoney.com/api/zipcodes/?zipcode=" <> query)
+        -- map (\query -> "https://postnummersok.se/sv/api/postcode?zipcode=" <> query)
+        map (\query -> "https://restcountries.eu/rest/v2/name/" <> query) -- ?fullText=true
+        >>> debounceTime 300
+        >>> retry 4)
+      responses = queries.responses
+        # map (_.body)
+  in div
+      [ input[inputString ==> queries]
+      , span[childShow <== responses]
+      -- button[cls := "button primary", click ==> bus, text "GO Fetch!"]
+      ]
+
 

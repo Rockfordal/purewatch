@@ -2,13 +2,13 @@ module TodoApp where
 
 import Data.Array (filter, snoc)
 import Data.String (length)
-import Helpers (closable, close)
+import Helpers (closable)
 import OutWatch.Attributes (children, click, cls, disabled, for, inputString, text, tpe, value, (:=), (<==), (==>))
 import OutWatch.Dom (id)
 import OutWatch.Dom.EmitterBuilder (mapE, override)
 import OutWatch.Dom.VDomModifier (VDom)
 import OutWatch.Sink (SinkLike, createStringHandler)
-import OutWatch.Tags (button, div, h3, input, label, li, ul)
+import OutWatch.Tags (button, div, input, label, li, ul)
 import Prelude (const, map, (#), (/=), (<), (<>))
 import RxJS.Observable (merge, scan, startWith)
 
@@ -23,7 +23,7 @@ textFieldComponent outputEvents =
   in
     div
       [ label [text "Enter new todo item:"
-        , input [ tpe := "text", inputString ==> textValues, value <== clearNewTodo.src ]
+        , input [tpe := "text", inputString ==> textValues, value <== clearNewTodo.src]
       ]
       , button
         [ override click textValues.src ==> outputEvents
@@ -69,7 +69,6 @@ todoview =
         -- , button [cls := "close-button", close := true, text "x"]
         ]
       , div [cls := "card-section"
-        , ul[children <== listViews
-        ]
+        , ul[children <== listViews]
         ]
       ]

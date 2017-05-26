@@ -1,0 +1,10 @@
+.DS_Store
+.psc-ide-port
+.psc-package/
+bower_components/
+node_modules/
+output/
+tmp/
+assets/bundle.js
+assets/bundle.js.map
+npm-debug.log

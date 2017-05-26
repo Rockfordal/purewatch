@@ -1,0 +1,23 @@
+/*#main a { display: block; }*/
+
+.top-bar {
+  background: #333;
+  padding: 0.5rem;
+}
+
+.top-bar li {
+  background: #333;
+}
+
+.top-bar li:hover {
+    background: #444;
+}
+
+.top-bar .menu a {
+  color: #fff;
+}
+
+.menu .active>a {
+  background: #000;
+  color: yellowgreen;
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+#./build && ./serv
+npm run webpack:server
